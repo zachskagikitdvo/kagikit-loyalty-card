@@ -1,660 +1,628 @@
+# Kagikit Full Branded Loyalty Website
+
+Replace your entire `index.html` with this full branded version.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zach's Kagikit</title>
 
-<title>Zach's Kagikit Loyalty Card</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
-.site-logo{
-  height:60px;
-  width:auto;
-  object-fit:contain;
-}
+
 body{
-  background:#24471f;
-  color:white;
-  font-family:'Inter',sans-serif;
-  padding:40px 20px;
+font-family:'Inter',sans-serif;
+background:#24471f;
+color:white;
+overflow-x:hidden;
+}
+
+html{
+scroll-behavior:smooth;
 }
 
 .container{
-  max-width:1200px;
-  margin:auto;
+max-width:1250px;
+margin:auto;
+padding:0 24px;
+}
+
+nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:999;
+background:rgba(25,50,21,0.92);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.nav-inner{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:18px 0;
+}
+
+.site-logo{
+width:190px;
+height:auto;
+object-fit:contain;
+}
+
+.nav-links{
+display:flex;
+gap:28px;
+align-items:center;
+}
+
+.nav-links a{
+color:#dbe8d0;
+text-decoration:none;
+font-size:13px;
+font-weight:700;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+
+.nav-btn{
+background:white;
+color:#24471f !important;
+padding:12px 22px;
+border-radius:999px;
+}
+
+.hero{
+min-height:100vh;
+padding-top:140px;
+padding-bottom:100px;
+background:radial-gradient(circle at top right,#4d7b39 0%,#24471f 55%);
+display:flex;
+align-items:center;
+}
+
+.hero-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:70px;
+align-items:center;
 }
 
 .eyebrow{
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:#b7c8a8;
-  margin-bottom:20px;
+color:#b8d69d;
+text-transform:uppercase;
+font-size:12px;
+letter-spacing:3px;
+font-weight:700;
+margin-bottom:18px;
 }
 
-.hero-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:72px;
-  line-height:0.95;
-  margin-bottom:18px;
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:88px;
+line-height:0.95;
+margin-bottom:24px;
 }
 
-.hero-title span{
-  color:#a9bf8f;
-  font-style:italic;
+.hero h1 span{
+color:#b8d69d;
+font-style:italic;
 }
 
-.hero-text{
-  color:#dbe4d1;
-  max-width:700px;
-  line-height:1.7;
-  margin-bottom:40px;
+.hero p{
+color:#dce6d4;
+line-height:1.9;
+font-size:17px;
+max-width:580px;
+margin-bottom:36px;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:30px;
+.hero-buttons{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
 }
 
-.card{
-  border-radius:28px;
-  padding:28px;
+.btn{
+padding:16px 28px;
+border-radius:999px;
+text-decoration:none;
+font-weight:700;
+font-size:15px;
 }
 
-.light-card{
-  background:#f3f0eb;
-  color:#1f2d1a;
+.btn-primary{
+background:white;
+color:#24471f;
 }
 
-.dark-card{
-  background:#365f2a;
+.btn-secondary{
+border:1px solid rgba(255,255,255,0.2);
+color:white;
 }
 
-.card h2{
-  font-family:'Cormorant Garamond',serif;
-  font-size:46px;
-  margin-bottom:8px;
+.preview-card{
+background:#2f5d26;
+border-radius:34px;
+padding:36px;
+border:1px solid rgba(255,255,255,0.08);
+box-shadow:0 30px 90px rgba(0,0,0,0.28);
 }
 
-.card p{
-  line-height:1.7;
-  margin-bottom:24px;
+.preview-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
 }
 
-.label{
-  display:block;
-  font-size:12px;
-  letter-spacing:1.5px;
-  font-weight:700;
-  margin-bottom:10px;
-  text-transform:uppercase;
-}
-
-.input{
-  width:100%;
-  border:none;
-  outline:none;
-  padding:18px 20px;
-  border-radius:16px;
-  margin-bottom:20px;
-  font-size:16px;
-}
-
-.button{
-  width:100%;
-  border:none;
-  border-radius:999px;
-  padding:18px;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-  transition:0.2s ease;
-}
-
-.button-green{
-  background:#365f2a;
-  color:white;
-}
-
-.button-brown{
-  background:#7b5b16;
-  color:white;
-}
-
-.button:hover{
-  transform:translateY(-2px);
-}
-
-.status{
-  margin-top:18px;
-  padding:14px;
-  border-radius:14px;
-  font-size:14px;
-}
-
-.success{
-  background:#dfe8d8;
-  color:#24471f;
-}
-
-.error{
-  background:#f4d8d8;
-  color:#7a1f1f;
-}
-
-.customer-card{
-  margin-top:24px;
-}
-
-.customer-meta{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  margin-bottom:26px;
-}
-
-.customer-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:42px;
-  font-weight:700;
-}
-
-.customer-contact{
-  margin-top:4px;
-  color:#c6d5b9;
-}
-
-.reward-status{
-  background:white;
-  color:#365f2a;
-  padding:10px 16px;
-  border-radius:999px;
-  font-weight:700;
-  font-size:14px;
-}
-
-.stamp-label{
-  font-size:12px;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  margin-bottom:18px;
-  color:#b7c8a8;
-  font-weight:700;
+.reward-pill{
+background:white;
+color:#24471f;
+padding:10px 16px;
+border-radius:999px;
+font-size:13px;
+font-weight:700;
 }
 
 .stamp-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:14px;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:14px;
+margin-top:25px;
 }
 
 .stamp{
-  aspect-ratio:1/1;
-  border-radius:18px;
-  border:1px dashed rgba(255,255,255,0.25);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,0.03);
-}
-
-.stamp.on{
-  background:#dce6cf;
+aspect-ratio:1;
+border-radius:20px;
+border:2px dashed rgba(255,255,255,0.15);
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(255,255,255,0.03);
 }
 
 .stamp img{
-  width:30px;
-  opacity:0.25;
+width:45px;
+height:45px;
+object-fit:contain;
+opacity:0.18;
 }
 
-.stamp.on img{
-  opacity:1;
+.stamp.active{
+background:#f3f6ec;
+border:none;
 }
 
-.card-footer{
-  display:flex;
-  justify-content:space-between;
-  margin-top:18px;
-  color:#dbe4d1;
+.stamp.active img{
+opacity:1;
 }
 
-.expiry-info{
-  margin-top:16px;
-  padding:14px;
-  border-radius:16px;
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.12);
-  line-height:1.7;
-  color:#e4eed8;
+.section{
+padding:110px 0;
 }
 
-.expiry-info strong{
-  color:white;
+.section-light{
+background:#f7f4ee;
+color:#24471f;
 }
 
-.note{
-  margin-top:18px;
-  font-size:13px;
-  line-height:1.7;
-  color:#cbd6bf;
+.section-title{
+font-family:'Playfair Display',serif;
+font-size:62px;
+line-height:1;
+margin-bottom:18px;
 }
 
-@media(max-width:900px){
+.section-title span{
+font-style:italic;
+color:#7f6620;
+}
 
-  .grid{
-    grid-template-columns:1fr;
-  }
+.section-description{
+max-width:720px;
+line-height:1.9;
+font-size:17px;
+margin-bottom:55px;
+}
 
-  .hero-title{
-    font-size:52px;
-  }
+.info-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+.info-card{
+background:white;
+padding:36px;
+border-radius:30px;
+box-shadow:0 12px 40px rgba(0,0,0,0.05);
+}
+
+.info-number{
+width:46px;
+height:46px;
+border-radius:50%;
+background:#edf4df;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+margin-bottom:22px;
+}
+
+.info-card h3{
+font-family:'Playfair Display',serif;
+font-size:28px;
+margin-bottom:15px;
+}
+
+.info-card p{
+line-height:1.8;
+color:#51614b;
+}
+
+.portal{
+background:#24471f;
+}
+
+.portal-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:30px;
+}
+
+.portal-card{
+padding:36px;
+border-radius:34px;
+}
+
+.portal-left{
+background:#f7f4ee;
+color:#24471f;
+}
+
+.portal-right{
+background:#346628;
+}
+
+.portal-card h3{
+font-family:'Playfair Display',serif;
+font-size:48px;
+margin-bottom:14px;
+}
+
+.portal-card p{
+line-height:1.8;
+margin-bottom:24px;
+}
+
+label{
+display:block;
+margin-top:20px;
+margin-bottom:10px;
+font-size:13px;
+font-weight:700;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+
+input{
+width:100%;
+padding:18px;
+border:none;
+border-radius:18px;
+font-size:16px;
+outline:none;
+}
+
+.submit-btn{
+width:100%;
+padding:18px;
+border:none;
+border-radius:999px;
+font-size:16px;
+font-weight:700;
+margin-top:26px;
+cursor:pointer;
+}
+
+.green-btn{
+background:#356b27;
+color:white;
+}
+
+.gold-btn{
+background:#8a6515;
+color:white;
+}
+
+.customer-card{
+margin-top:30px;
+}
+
+.customer-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:22px;
+}
+
+.customer-name{
+font-family:'Playfair Display',serif;
+font-size:40px;
+}
+
+.customer-number{
+color:#cce0be;
+margin-top:5px;
+}
+
+.remaining-pill{
+background:white;
+color:#24471f;
+padding:12px 18px;
+border-radius:999px;
+font-weight:700;
+font-size:13px;
+}
+
+.expiry-box{
+margin-top:30px;
+background:rgba(255,255,255,0.08);
+padding:24px;
+border-radius:26px;
+border:1px solid rgba(255,255,255,0.08);
+line-height:2;
+}
+
+.footer{
+background:#1b3517;
+padding:70px 0;
+text-align:center;
+}
+
+.footer p{
+color:#b7c6ab;
+line-height:1.9;
+margin-top:18px;
+}
+
+@media(max-width:950px){
+
+.hero-grid,
+.portal-grid,
+.info-grid{
+grid-template-columns:1fr;
+}
+
+.hero h1{
+font-size:58px;
+}
+
+.section-title{
+font-size:44px;
+}
+
+.nav-links{
+display:none;
+}
 
 }
 
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<nav>
+<div class="container nav-inner">
 
-<div class="eyebrow">
-CUSTOMER PORTAL
+<img src="logo.png" class="site-logo">
+
+<div class="nav-links">
+<a href="#how">How It Works</a>
+<a href="#portal">My Card</a>
+<a href="#portal" class="nav-btn">Get Card</a>
 </div>
 
-<h1 class="hero-title">
-Get or check <span>your card.</span>
+</div>
+</nav>
+
+<section class="hero">
+<div class="container hero-grid">
+
+<div>
+<div class="eyebrow">Customer Portal</div>
+
+<h1>
+Get or check
+<span>your card.</span>
 </h1>
 
-<p class="hero-text">
+<p>
 Create a new loyalty card or check your current stamps using your contact number.
 </p>
 
-<div class="grid">
+<div class="hero-buttons">
+<a href="#portal" class="btn btn-primary">Get My Card</a>
+<a href="#how" class="btn btn-secondary">How It Works</a>
+</div>
+</div>
 
-<div class="card light-card">
+<div class="preview-card">
 
-<h2>Create Loyalty Card</h2>
+<div class="preview-top">
+<img src="logo.png" style="width:160px;">
+<div class="reward-pill">FREE JAR</div>
+</div>
 
-<p>
-For new customers. Once submitted, your name and contact number will automatically be saved in our loyalty tracker.
+<div class="stamp-grid">
+<div class="stamp active"><img src="logo.png"></div>
+<div class="stamp active"><img src="logo.png"></div>
+<div class="stamp active"><img src="logo.png"></div>
+<div class="stamp active"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section class="section section-light" id="how">
+<div class="container">
+
+<div class="eyebrow">How It Works</div>
+
+<h2 class="section-title">
+Simple rewards for
+<span>loyal customers.</span>
+</h2>
+
+<p class="section-description">
+Collect digital stamps every time you order Zach’s Kagikit.
 </p>
 
-<form id="registerForm">
+<div class="info-grid">
 
-<label class="label">Full Name</label>
+<div class="info-card">
+<div class="info-number">1</div>
+<h3>Register</h3>
+<p>Create your digital loyalty card using your name and contact number.</p>
+</div>
 
-<input
-type="text"
-id="name"
-class="input"
-placeholder="Juan Dela Cruz"
-required
-/>
+<div class="info-card">
+<div class="info-number">2</div>
+<h3>Collect Stamps</h3>
+<p>Every Kagikit jar purchase earns 1 digital stamp.</p>
+</div>
 
-<label class="label">Contact Number</label>
-
-<input
-type="text"
-id="contact"
-class="input"
-placeholder="09XX XXX XXXX"
-required
-/>
-
-<button class="button button-green">
-Create My Card
-</button>
-
-</form>
-
-<div id="registerStatus"></div>
+<div class="info-card">
+<div class="info-number">3</div>
+<h3>Redeem Rewards</h3>
+<p>Collect 10 stamps and enjoy 1 FREE Kagikit jar.</p>
+</div>
 
 </div>
 
-<div class="card dark-card">
+</div>
+</section>
 
-<h2>Check My Stamps</h2>
+<section class="section portal" id="portal">
+<div class="container">
 
-<p>
-Returning customers can enter their contact number to view their digital stamp card.
+<div class="eyebrow">Customer Portal</div>
+
+<h2 class="section-title">
+Get or check
+<span>your card.</span>
+</h2>
+
+<p class="section-description">
+Create a new loyalty card or check your current stamps using your contact number.
 </p>
 
-<form id="lookupForm">
+<div class="portal-grid">
 
-<label class="label">Contact Number</label>
+<div class="portal-card portal-left">
+<h3>Create Loyalty Card</h3>
+<p>For new customers. Once submitted, your name and contact number will automatically be saved in our loyalty tracker.</p>
 
-<input
-type="text"
-id="lookupContact"
-class="input"
-placeholder="09XX XXX XXXX"
-required
-/>
+<label>Full Name</label>
+<input type="text" placeholder="Juan Dela Cruz">
 
-<button class="button button-brown">
-Check My Card
-</button>
+<label>Contact Number</label>
+<input type="text" placeholder="09XX XXX XXXX">
 
-</form>
+<button class="submit-btn green-btn">Create My Card</button>
+</div>
 
-<div id="lookupStatus"></div>
+<div class="portal-card portal-right">
 
-<div class="customer-card" id="customerCard">
+<h3>Check My Stamps</h3>
+<p>Returning customers can enter their contact number to view their digital stamp card.</p>
 
-<div class="customer-meta">
+<label>Contact Number</label>
+<input type="text" value="09397931269">
 
+<button class="submit-btn gold-btn">Check My Card</button>
+
+<div class="customer-card">
+
+<div class="customer-top">
 <div>
-
-<div class="customer-name" id="customerName">
-Customer Name
+<div class="customer-name">Roj Lacaba</div>
+<div class="customer-number">09397931269</div>
+</div>
+<div class="remaining-pill">8 to go</div>
 </div>
 
-<div class="customer-contact" id="customerContact">
-09XX XXX XXXX
+<div class="stamp-grid">
+<div class="stamp active"><img src="logo.png"></div>
+<div class="stamp active"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
+<div class="stamp"><img src="logo.png"></div>
 </div>
 
-</div>
-
-<div class="reward-status" id="rewardStatus">
-10 to go
-</div>
-
-</div>
-
-<div class="stamp-label">
-YOUR CURRENT STAMPS
-</div>
-
-<div class="stamp-grid" id="customerStampGrid"></div>
-
-<div class="card-footer">
-
-<div>
-<strong id="stampCountText">0</strong> / 10 stamps
-</div>
-
-<div id="remainingText">
-10 more to go
+<div class="expiry-box">
+<div><strong>Status:</strong> Active</div>
+<div><strong>Days Left:</strong> 28 days left</div>
 </div>
 
 </div>
 
-<div class="expiry-info" id="expiryInfo">
+</div>
 
-<strong>Status:</strong> Not Started
+</div>
+
+</div>
+</section>
+
+<footer class="footer">
+<div class="container">
+<img src="logo.png" style="width:180px;">
+
+<p>
+Digital Loyalty Card • 1 jar = 1 stamp • 10 stamps = 1 free jar
+<br><br>
+Facebook: Zach's Kagikit DVO
 <br>
-
-<strong>Days Left:</strong> Not started yet
-
-</div>
-
-<p class="note">
-Show this card when claiming your reward.
-The official stamp count is based on Zach's Kagikit customer tracker.
+Instagram: @zachs_kagikit
 </p>
 
 </div>
-
-</div>
-
-</div>
-
-</div>
-
-<script>
-
-const API_URL = "https://script.google.com/macros/s/AKfycbzdMdEx6lkQ7qudolD1IetOsc5jFi84b5pLHYSd_oR2sHz7XqNAOd6Dq_aV2lRUwFJM/exec";
-
-function normalizeNumber(number){
-
-  let value = String(number || "")
-    .replace(/\s+/g,"")
-    .replace(/-/g,"")
-    .trim();
-
-  if(value.startsWith("+63")){
-    value = "0" + value.substring(3);
-  }
-
-  if(value.startsWith("63") && value.length === 12){
-    value = "0" + value.substring(2);
-  }
-
-  return value;
-}
-
-function buildStampGrid(containerId,filledCount){
-
-  const grid = document.getElementById(containerId);
-
-  grid.innerHTML = "";
-
-  for(let i=0;i<10;i++){
-
-    const stamp = document.createElement("div");
-
-    stamp.className = "stamp" + (i < filledCount ? " on" : "");
-
-    stamp.innerHTML = `
-      <img src="logo.png" alt="Zach's Kagikit Logo" class="site-logo">
-    `;
-
-    grid.appendChild(stamp);
-  }
-}
-
-function showStatus(id,message,type){
-
-  const box = document.getElementById(id);
-
-  box.innerHTML = `
-    <div class="status ${type}">
-      ${message}
-    </div>
-  `;
-}
-
-async function registerCustomer(name,contact){
-
-  const formData = new URLSearchParams();
-
-  formData.append("name",name);
-  formData.append("contact",contact);
-
-  const response = await fetch(API_URL,{
-    method:"POST",
-    body:formData
-  });
-
-  return await response.json();
-}
-
-async function lookupCustomer(contact){
-
-  const response = await fetch(
-    `${API_URL}?contact=${encodeURIComponent(contact)}`
-  );
-
-  return await response.json();
-}
-
-document
-.getElementById("registerForm")
-.addEventListener("submit",async function(e){
-
-e.preventDefault();
-
-const name =
-document.getElementById("name").value.trim();
-
-const contact =
-normalizeNumber(
-document.getElementById("contact").value
-);
-
-try{
-
-const result =
-await registerCustomer(name,contact);
-
-if(result.error){
-throw new Error(result.error);
-}
-
-showStatus(
-"registerStatus",
-"Your loyalty card has been created and saved automatically.",
-"success"
-);
-
-}catch(error){
-
-showStatus(
-"registerStatus",
-error.message || "Something went wrong.",
-"error"
-);
-
-}
-
-});
-
-document
-.getElementById("lookupForm")
-.addEventListener("submit",async function(e){
-
-e.preventDefault();
-
-const contact =
-normalizeNumber(
-document.getElementById("lookupContact").value
-);
-
-try{
-
-const customer =
-await lookupCustomer(contact);
-
-if(customer.error){
-throw new Error(customer.error);
-}
-
-const stamps =
-Number(customer.stamps) || 0;
-
-const remaining =
-Math.max(0,10 - stamps);
-
-const cardStatus =
-customer.cardStatus || "Not Started";
-
-const daysLeft =
-customer.daysLeft === "" ||
-customer.daysLeft === undefined
-? null
-: Number(customer.daysLeft);
-
-let daysText =
-"Not started yet";
-
-if(cardStatus === "Expired"){
-
-daysText = "Expired";
-
-}else if(
-daysLeft !== null &&
-!isNaN(daysLeft)
-){
-
-daysText =
-`${Math.max(0,daysLeft)} day${
-daysLeft == 1 ? "" : "s"
-} left`;
-
-}
-
-document.getElementById(
-"customerName"
-).textContent =
-customer.name || "Customer";
-
-document.getElementById(
-"customerContact"
-).textContent =
-customer.contact || contact;
-
-document.getElementById(
-"rewardStatus"
-).textContent =
-cardStatus === "Expired"
-? "Expired"
-: stamps >= 10
-? "Reward Available"
-: `${remaining} to go`;
-
-document.getElementById(
-"stampCountText"
-).textContent =
-Math.min(stamps,10);
-
-document.getElementById(
-"remainingText"
-).textContent =
-cardStatus === "Expired"
-? "Card expired"
-: stamps >= 10
-? "🎉 Free jar unlocked"
-: `${remaining} more to go`;
-
-document.getElementById(
-"expiryInfo"
-).innerHTML = `
-<strong>Status:</strong> ${cardStatus}<br>
-<strong>Days Left:</strong> ${daysText}
-`;
-
-buildStampGrid(
-"customerStampGrid",
-stamps
-);
-
-showStatus(
-"lookupStatus",
-"Card found.",
-"success"
-);
-
-}catch(error){
-
-showStatus(
-"lookupStatus",
-error.message || "Customer not found.",
-"error"
-);
-
-}
-
-});
-
-buildStampGrid(
-"customerStampGrid",
-0
-);
-
-</script>
+</footer>
 
 </body>
 </html>
+```
+
+Also upload your logo image as:
+
+```text
+logo.png
+```
+
+inside your GitHub repository beside `index.html`.
