@@ -1,144 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zach's Kagikit Loyalty Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark: #2b4622;
+    --green-mid: #3a5c2e;
+    --green-light: #4e7a3e;
+    --green-pale: #a8c890;
+    --green-wash: #e8f0e2;
+    --brown: #5c4a1e;
+    --cream: #faf7f0;
+    --white: #ffffff;
+    --text: #1e2e18;
+    --muted: #5a6650;
+    --line: rgba(58,92,46,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: rgba(43,70,34,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid rgba(168,200,144,0.2);
+  }
+
+  .nav-logo, .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .brand-icon svg { width: 22px; height: 22px; fill: var(--green-mid); }
+
+  .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--green-pale);
+    text-decoration: none;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    font-weight: 700;
+  }
+
+  .nav-links a:hover { color: white; }
+
+  .nav-cta {
+    background: white;
+    color: var(--green-mid) !important;
+    padding: 9px 18px;
+    border-radius: 999px;
+  }
+
+  .hero {
+    min-height: 100vh;
+    background: var(--green-mid);
+    padding: 112px 40px 70px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before,
+  .hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: var(--green-light);
+    opacity: 0.28;
+  }
+
+  .hero::before { width: 620px; height: 620px; right: -180px; top: -220px; }
+  .hero::after { width: 280px; height: 280px; left: -90px; bottom: -90px; }
+
+  .hero-inner {
+    max-width: 1120px;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    gap: 64px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.14);
+    color: var(--green-pale);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    line-height: 1.08;
+  }
+
+  .hero h1 {
+    color: white;
+    font-size: clamp(42px, 7vw, 76px);
+    letter-spacing: -0.8px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 em { color: var(--green-pale); }
+
+  .hero p {
+    color: rgba(255,255,255,0.75);
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 480px;
+    margin-bottom: 34px;
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 999px;
+    padding: 14px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+
+  .btn-primary { background: white; color: var(--green-mid); }
+  .btn-primary:hover { box-shadow: 0 12px 30px rgba(0,0,0,0.18); }
+  .btn-outline { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.38); }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); }
+  .btn-green { background: var(--green-mid); color: white; width: 100%; }
+  .btn-brown { background: var(--brown); color: white; width: 100%; }
+
+  .card-preview {
+    background: var(--green-dark);
+    border-radius: 28px;
+    padding: 30px;
+    box-shadow: 0 38px 90px rgba(0,0,0,0.34);
+    border: 0.5px solid rgba(255,255,255,0.16);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-preview::before {
+    content: '';
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background: var(--green-light);
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    opacity: 0.25;
+  }
+
+  .loyalty-card-content { position: relative; z-index: 1; }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 800;
+    color: white;
+  }
+
+  .card-subtitle {
+    color: var(--green-pale);
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1.3px;
+    margin-top: 2px;
+  }
+
+  .reward-pill {
+    background: white;
+    color: var(--green-mid);
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 12px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.14);
+    margin: 18px 0;
+  }
+
+  .stamp-label {
+    font-size: 10px;
+    color: var(--green-pale);
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .stamp-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .stamp {
+    aspect-ratio: 1;
+    border-radius: 13px;
+    border: 1.5px dashed rgba(255,255,255,0.24);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .stamp.on { background: white; border-color: white; }
+  .stamp svg { width: 22px; height: 22px; fill: rgba(255,255,255,0.18); }
+  .stamp.on svg { fill: var(--green-mid); }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--green-pale);
+    font-size: 13px;
+  }
+
+  .card-footer strong { color: white; }
+
+  section { padding: 90px 40px; }
+
+  .section-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    display: block;
+    color: var(--green-light);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    color: var(--green-dark);
+    font-size: clamp(32px, 5vw, 52px);
+    margin-bottom: 16px;
+  }
+
+  .section-title em { color: var(--brown); }
+
+  .section-lead {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 620px;
+    margin-bottom: 42px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .info-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 26px;
+    box-shadow: 0 14px 34px rgba(58,92,46,0.07);
+  }
+
+  .info-card .num {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--green-wash);
+    color: var(--green-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    margin-bottom: 18px;
+  }
+
+  .info-card h3 {
+    color: var(--green-dark);
+    font-size: 21px;
+    margin-bottom: 10px;
+  }
+
+  .info-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .loyalty-app {
+    background: var(--green-dark);
+    color: white;
+  }
+
+  .loyalty-app .section-tag { color: var(--green-pale); }
+  .loyalty-app .section-title { color: white; }
+  .loyalty-app .section-title em { color: var(--green-pale); }
+  .loyalty-app .section-lead { color: rgba(255,255,255,0.68); }
+
+  .app-grid {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 34px;
+    align-items: start;
+  }
+
+  .panel {
+    background: white;
+    color: var(--text);
+    border-radius: 26px;
+    padding: 26px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .panel.dark {
+    background: var(--green-mid);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .panel h3 {
+    font-size: 25px;
+    color: var(--green-dark);
+    margin-bottom: 8px;
+  }
+
+  .panel.dark h3 { color: white; }
+
+  .panel-note {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .panel.dark .panel-note { color: rgba(255,255,255,0.65); }
+
+  label {
+    display: block;
+    color: var(--green-dark);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 14px 0 7px;
+  }
+
+  .panel.dark label { color: var(--green-pale); }
+
+  input {
+    width: 100%;
+    border: 1px solid rgba(58,92,46,0.18);
+    border-radius: 14px;
+    padding: 14px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    background: #fff;
+  }
+
+  input:focus {
+    border-color: var(--green-mid);
+    box-shadow: 0 0 0 3px rgba(58,92,46,0.1);
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-actions { margin-top: 18px; display: grid; gap: 10px; }
+
+  .status-box {
+    margin-top: 16px;
+    padding: 13px 14px;
+    border-radius: 14px;
+    background: var(--green-wash);
+    color: var(--green-dark);
+    font-size: 13px;
+    line-height: 1.5;
+    display: none;
+  }
+
+  .status-box.show { display: block; }
+  .status-box.error { background: #f8e7e3; color: #7a2e22; }
+  .status-box.success { background: #e8f0e2; color: var(--green-dark); }
+
+  .customer-card {
+    display: none;
+    margin-top: 22px;
+  }
+
+  .customer-card.show { display: block; }
+
+  .customer-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .customer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: white;
+  }
+
+  .customer-contact { color: var(--green-pale); font-size: 13px; margin-top: 3px; }
+
+  .reward-status {
+    background: white;
+    color: var(--green-mid);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 800;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .qr-note {
+    margin-top: 16px;
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .admin-section {
+    background: white;
+  }
+
+  .admin-box {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    padding: 28px;
+  }
+
+  .code-box {
+    background: #172614;
+    color: #dcebd3;
+    border-radius: 18px;
+    padding: 18px;
+    overflow-x: auto;
+    font-size: 12px;
+    line-height: 1.55;
+    margin-top: 18px;
+  }
+
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+  }
+
+  .ing-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px 14px;
+    text-align: center;
+  }
+
+  .ing-icon { font-size: 30px; display: block; margin-bottom: 10px; }
+  .ing-name { font-family: 'Playfair Display', serif; font-weight: 800; color: var(--green-dark); font-size: 15px; }
+  .ing-note { font-size: 12px; color: #829078; line-height: 1.4; margin-top: 5px; }
+
+  .cta-section {
+    background: var(--brown);
+    text-align: center;
+    color: white;
+  }
+
+  .cta-section .section-title { color: white; }
+  .cta-section .section-title em { color: #f5e5c8; }
+  .cta-section .section-lead { color: rgba(255,255,255,0.75); margin-left: auto; margin-right: auto; }
+
+  footer {
+    background: var(--green-dark);
+    color: white;
+    padding: 34px 40px;
+  }
+
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .footer-note { color: rgba(255,255,255,0.48); font-size: 12px; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 104px 20px 60px; }
+    .hero-inner, .app-grid { grid-template-columns: 1fr; gap: 34px; }
+    .hero-card-wrap { order: -1; }
+    section { padding: 64px 20px; }
+    .grid-3, .ingredients-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="nav-logo">
+    <div class="brand-icon">
+      <svg viewBox="0 0 64 64"><path d="M32 8C24 8 18 13 18 20c0 4 2 7 2 7-4 1-8 4-8 9 0 6 5 10 12 11l-2 9h6l1-9h6l1 9h6l-2-9c7-1 12-5 12-11 0-5-4-8-8-9 0 0 2-3 2-7 0-7-6-12-14-12zm-4 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-8-4s-4-2-6 0c-1 1 0 3 2 3 1 0 3-1 4-3z"/></svg>
+    </div>
+    <span class="brand-name">Zach's Kagikit</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#card">My Card</a></li>
+    
+    <li><a href="#card" class="nav-cta">Get Card</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">🍗 Digital Loyalty Card</div>
+      <h1>Kagikit rewards, <br><em>crafted for loyal customers.</em></h1>
+      <p>Collect digital stamps every time you order Zach's Kagikit. No paper card, no lost stamps — just enter your contact number and check your rewards anytime.</p>
+      <div class="button-row">
+        <a href="#card" class="btn btn-primary">🎁 Get my loyalty card</a>
+        <a href="#how" class="btn btn-outline">How it works →</a>
+      </div>
+    </div>
+
+    <div class="hero-card-wrap">
+      <div class="card-preview">
+        <div class="loyalty-card-content">
+          <div class="card-top">
+            <div class="brand-row">
+              <div class="brand-icon">
+                <svg viewBox="0 0 64 64"><path d="M32 8C24 8 18 13 18 20c0 4 2 7 2 7-4 1-8 4-8 9 0 6 5 10 12 11l-2 9h6l1-9h6l1 9h6l-2-9c7-1 12-5 12-11 0-5-4-8-8-9 0 0 2-3 2-7 0-7-6-12-14-12zm-4 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-8-4s-4-2-6 0c-1 1 0 3 2 3 1 0 3-1 4-3z"/></svg>
+              </div>
+              <div>
+                <div class="card-title">Zach's Kagikit</div>
+                <div class="card-subtitle">Loyalty Card</div>
+              </div>
+            </div>
+            <div class="reward-pill">Free Jar</div>
+          </div>
+          <div class="divider"></div>
+          <div class="stamp-label">Collect 10 stamps to redeem</div>
+          <div class="stamp-grid" id="heroStampGrid"></div>
+          <div class="card-footer">
+            <div><strong>6</strong> / 10 stamps</div>
+            <div>🎁 4 more to go</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="how">
+  <div class="section-inner">
+    <span class="section-tag">How it works</span>
+    <h2 class="section-title">Simple rewards for <em>loyal customers.</em></h2>
+    <p class="section-lead">Start collecting rewards every time you order Zach’s Kagikit. Register your loyalty card online and your name and contact number will automatically be saved in our loyalty tracker.</p>
+
+    <div class="grid-3">
+      <div class="info-card">
+        <div class="num">1</div>
+        <h3>Register</h3><p>Create your digital loyalty card using your name and contact number.</p>
+      </div>
+      <div class="info-card">
+        <div class="num">2</div>
+        <h3>Collect Stamps</h3><p>Every Kagikit jar purchase earns 1 digital stamp. After every confirmed order, your stamp count will be updated in your digital card.</p>
+      </div>
+      <div class="info-card">
+        <div class="num">3</div>
+        <h3>Redeem Rewards</h3><p>Collect 10 stamps and enjoy 1 FREE Kagikit jar on your next order.</p>
+      </div>
+    </div>
+
+    <div class="info-card" style="margin-top:18px;">
+      <div class="num">💬</div>
+      <h3>Follow & Message Us</h3>
+      <p>For order updates, questions, and reward claims, message us on our official pages.<br><br><strong>Facebook:</strong> Zach’s Kagikit DVO<br><strong>Instagram:</strong> @zachs_kagikit</p>
+    </div>
+  </div>
+</section>
+
+<section class="loyalty-app" id="card">
+  <div class="section-inner">
+    <span class="section-tag">Customer portal</span>
+    <h2 class="section-title">Get or check <em>your card.</em></h2>
+    <p class="section-lead">Create a new loyalty card or check your current stamps using your contact number.</p>
+
+    <div class="app-grid">
+      <div class="panel">
+        <h3>Create Loyalty Card</h3>
+        <p class="panel-note">For new customers. Once submitted, your name and contact number will automatically be saved in our loyalty tracker.</p>
+        <form id="registerForm">
+          <label for="name">Full Name</label>
+          <input id="name" type="text" placeholder="Juan Dela Cruz" required />
+
+          <label for="contact">Contact Number</label>
+          <input id="contact" type="text" placeholder="09XX XXX XXXX" required />
+
+          <div class="form-actions">
+            <button class="btn btn-green" type="submit">Create My Card</button>
+          </div>
+        </form>
+        <div class="status-box" id="registerStatus"></div>
+      </div>
+
+      <div class="panel dark">
+        <h3>Check My Stamps</h3>
+        <p class="panel-note">Returning customers can enter their contact number to view their digital stamp card.</p>
+        <form id="lookupForm">
+          <label for="lookupContact">Contact Number</label>
+          <input id="lookupContact" type="text" placeholder="09XX XXX XXXX" required />
+          <div class="form-actions">
+            <button class="btn btn-brown" type="submit">Check My Card</button>
+          </div>
+        </form>
+        <div class="status-box" id="lookupStatus"></div>
+
+        <div class="customer-card" id="customerCard">
+          <div class="customer-meta">
+            <div>
+              <div class="customer-name" id="customerName">Customer Name</div>
+              <div class="customer-contact" id="customerContact">09XX XXX XXXX</div>
+            </div>
+            <div class="reward-status" id="rewardStatus">0 / 10</div>
+          </div>
+
+          <div class="stamp-label">Your current stamps</div>
+          <div class="stamp-grid" id="customerStampGrid"></div>
+          <div class="card-footer">
+            <div><strong id="stampCountText">0</strong> / 10 stamps</div>
+            <div id="remainingText">10 more to go</div>
+          </div>
+          <p class="qr-note">Show this card when claiming your reward. The official stamp count is based on Zach's Kagikit customer tracker.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <span class="section-tag">What's inside</span>
+    <h2 class="section-title">Real ingredients, <em>nothing to hide.</em></h2>
+    <p class="section-lead">Every batch is made with honest ingredients and crafted in small batches.</p>
+
+    <div class="ingredients-grid">
+      <div class="ing-card"><span class="ing-icon">🌴</span><div class="ing-name">Palm Oil</div><div class="ing-note">Rich golden finish</div></div>
+      <div class="ing-card"><span class="ing-icon">🍗</span><div class="ing-name">Chicken Meat</div><div class="ing-note">Fresh and flavorful</div></div>
+      <div class="ing-card"><span class="ing-icon">🧄</span><div class="ing-name">Garlic</div><div class="ing-note">Aromatic depth</div></div>
+      <div class="ing-card"><span class="ing-icon">🧅</span><div class="ing-name">Onion</div><div class="ing-note">Natural sweetness</div></div>
+      <div class="ing-card"><span class="ing-icon">🫙</span><div class="ing-name">Soy Sauce</div><div class="ing-note">Savory umami</div></div>
+      <div class="ing-card"><span class="ing-icon">✨</span><div class="ing-name">MSG</div><div class="ing-note">Extra sarap</div></div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="cta-section">
+  <div class="section-inner">
+    <h2 class="section-title">Ready for your <em>first stamp?</em></h2>
+    <p class="section-lead">Collect 10 stamps and get 1 free jar of Zach's Kagikit.</p>
+    <a href="#card" class="btn btn-primary">🍗 Start Collecting</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="brand-row">
+      <div class="brand-icon">
+        <svg viewBox="0 0 64 64"><path d="M32 8C24 8 18 13 18 20c0 4 2 7 2 7-4 1-8 4-8 9 0 6 5 10 12 11l-2 9h6l1-9h6l1 9h6l-2-9c7-1 12-5 12-11 0-5-4-8-8-9 0 0 2-3 2-7 0-7-6-12-14-12zm-4 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-8-4s-4-2-6 0c-1 1 0 3 2 3 1 0 3-1 4-3z"/></svg>
+      </div>
+      <span class="brand-name">Zach's Kagikit</span>
+    </div>
+    <div class="footer-note">Digital Loyalty Card · 1 jar = 1 stamp · 10 stamps = 1 free jar<br>Follow us: Facebook — Zach’s Kagikit DVO · Instagram — @zachs_kagikit</div>
+  </div>
+</footer>
+
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbx0i0AticIQfYud7vMJCvZZ7QhxZx9srgULGGTXCwmxdDHqIGzW7FKgGHy5nUxkX_XWWw/exec";
+  // STEP 1: Paste your deployed Google Apps Script Web App URL here.
+  const API_URL = "https://script.google.com/macros/s/AKfycbzdMdEx6lkQ7qudolD1IetOsc5jFi84b5pLHYSd_oR2sHz7XqNAOd6Dq_aV2lRUwFJM/exec";
 
-const registerForm = document.getElementById("registerForm");
-const checkForm = document.getElementById("checkForm");
+  const chickenPath = `<path d="M32 8C24 8 18 13 18 20c0 4 2 7 2 7-4 1-8 4-8 9 0 6 5 10 12 11l-2 9h6l1-9h6l1 9h6l-2-9c7-1 12-5 12-11 0-5-4-8-8-9 0 0 2-3 2-7 0-7-6-12-14-12zm-4 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-8-4s-4-2-6 0c-1 1 0 3 2 3 1 0 3-1 4-3z"/>`;
 
-const registerStatus = document.getElementById("registerStatus");
-const checkStatus = document.getElementById("checkStatus");
-
-const cardResult = document.getElementById("cardResult");
-
-function normalizeNumber(number) {
-  let value = String(number || "")
-    .replace(/\s+/g, "")
-    .replace(/-/g, "")
-    .trim();
-
-  if (value.startsWith("+63")) {
-    value = "0" + value.substring(3);
+  function buildStampGrid(containerId, filledCount) {
+    const grid = document.getElementById(containerId);
+    if (!grid) return;
+    const safeCount = Math.max(0, Math.min(10, Number(filledCount) || 0));
+    grid.innerHTML = '';
+    for (let i = 0; i < 10; i++) {
+      const stamp = document.createElement('div');
+      stamp.className = 'stamp' + (i < safeCount ? ' on' : '');
+      stamp.innerHTML = `<svg viewBox="0 0 64 64">${chickenPath}</svg>`;
+      grid.appendChild(stamp);
+    }
   }
 
-  if (value.startsWith("63") && value.length === 12) {
-    value = "0" + value.substring(2);
+  function showStatus(id, message, type = 'success') {
+    const box = document.getElementById(id);
+    box.textContent = message;
+    box.className = `status-box show ${type}`;
   }
 
-  return value;
-}
+  function normalizeContact(value) {
+    return String(value || '').replace(/\s+/g, '').trim();
+  }
 
-function showStatus(element, message, type = "success") {
-  element.textContent = message;
-  element.className = `status ${type}`;
-}
+  async function registerCustomer(name, contact) {
+    if (!API_URL || API_URL.includes('PASTE_YOUR')) {
+      throw new Error('Connection error: API URL is missing.');
+    }
 
-registerForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById("registerName").value.trim();
-  const contact = normalizeNumber(
-    document.getElementById("registerContact").value
-  );
-
-  try {
     const formData = new URLSearchParams();
-    formData.append("name", name);
-    formData.append("contact", contact);
+    formData.append('action', 'register');
+    formData.append('name', name);
+    formData.append('contact', contact);
 
     const response = await fetch(API_URL, {
-      method: "POST",
+      method: 'POST',
       body: formData
     });
 
-    const data = await response.json();
-
-    if (data.error) {
-      showStatus(registerStatus, data.error, "error");
-      return;
+    const text = await response.text();
+    try {
+      return JSON.parse(text);
+    } catch (err) {
+      throw new Error('Registration was sent, but the server response was not readable. Please check Apps Script deployment.');
     }
-
-    showStatus(
-      registerStatus,
-      "Your loyalty card has been created and saved automatically."
-    );
-
-    registerForm.reset();
-
-  } catch (err) {
-    showStatus(
-      registerStatus,
-      "Registration failed. Please try again.",
-      "error"
-    );
   }
-});
 
-checkForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const contact = normalizeNumber(
-    document.getElementById("checkContact").value
-  );
-
-  try {
-    const response = await fetch(
-      `${API_URL}?contact=${encodeURIComponent(contact)}`
-    );
-
-    const data = await response.json();
-
-    if (data.error) {
-      showStatus(checkStatus, "Customer not found.", "error");
-      cardResult.innerHTML = "";
-      return;
+  async function lookupCustomer(contact) {
+    if (!API_URL || API_URL.includes('PASTE_YOUR')) {
+      // Demo mode while API is not connected yet.
+      return {
+        name: 'Customer',
+        contact,
+        stamps: 0,
+        reward: 'Collect 10 more stamps'
+      };
     }
 
-    showStatus(checkStatus, "Card found.");
-
-    const stamps = Number(data.stamps) || 0;
-    const remaining = Math.max(10 - stamps, 0);
-
-    let stampBoxes = "";
-
-    for (let i = 0; i < 10; i++) {
-      stampBoxes += `
-        <div class="stamp-box ${i < stamps ? "filled" : ""}">
-          <img src="https://i.imgur.com/6IUbEMN.png" alt="Stamp">
-        </div>
-      `;
-    }
-
-    cardResult.innerHTML = `
-      <div class="card-profile">
-        <div>
-          <h3>${data.name}</h3>
-          <p>${data.contact}</p>
-        </div>
-
-        <div class="badge">
-          ${remaining > 0 ? `${remaining} to go` : "Reward Ready"}
-        </div>
-      </div>
-
-      <p class="label">YOUR CURRENT STAMPS</p>
-
-      <div class="stamp-grid">
-        ${stampBoxes}
-      </div>
-
-      <div class="stamp-footer">
-        <span>${stamps} / 10 stamps</span>
-        <span>
-          ${remaining > 0 ? `${remaining} more to go` : "Reward Available"}
-        </span>
-      </div>
-    `;
-
-  } catch (err) {
-    showStatus(
-      checkStatus,
-      "Unable to retrieve card.",
-      "error"
-    );
+    const response = await fetch(`${API_URL}?contact=${encodeURIComponent(contact)}`);
+    return await response.json();
   }
-});
+
+  document.getElementById('registerForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const contact = normalizeContact(document.getElementById('contact').value);
+
+    try {
+      await registerCustomer(name, contact);
+      showStatus('registerStatus', 'Your loyalty card has been created and saved automatically. You may now check your stamps using your contact number.', 'success');
+      document.getElementById('lookupContact').value = contact;
+    } catch (error) {
+      showStatus('registerStatus', error.message, 'error');
+    }
+  });
+
+  document.getElementById('lookupForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const contact = normalizeContact(document.getElementById('lookupContact').value);
+
+    try {
+      const customer = await lookupCustomer(contact);
+      if (customer.error) throw new Error(customer.error);
+
+      const stamps = Number(customer.stamps) || 0;
+      const remaining = Math.max(0, 10 - stamps);
+
+      document.getElementById('customerName').textContent = customer.name || 'Customer';
+      document.getElementById('customerContact').textContent = customer.contact || contact;
+      document.getElementById('rewardStatus').textContent = stamps >= 10 ? 'Reward Available' : `${remaining} to go`;
+      document.getElementById('stampCountText').textContent = Math.min(stamps, 10);
+      document.getElementById('remainingText').textContent = stamps >= 10 ? '🎉 Free jar unlocked' : `${remaining} more to go`;
+      buildStampGrid('customerStampGrid', stamps);
+      document.getElementById('customerCard').classList.add('show');
+      showStatus('lookupStatus', 'Card found.', 'success');
+    } catch (error) {
+      document.getElementById('customerCard').classList.remove('show');
+      showStatus('lookupStatus', error.message || 'Customer not found.', 'error');
+    }
+  });
+
+  buildStampGrid('heroStampGrid', 6);
+  buildStampGrid('customerStampGrid', 0);
 </script>
+</body>
+</html>
