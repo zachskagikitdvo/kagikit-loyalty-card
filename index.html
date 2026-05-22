@@ -18,7 +18,11 @@
   padding:0;
   box-sizing:border-box;
 }
-
+.site-logo{
+  height:60px;
+  width:auto;
+  object-fit:contain;
+}
 body{
   background:#24471f;
   color:white;
@@ -445,7 +449,7 @@ function buildStampGrid(containerId,filledCount){
     stamp.className = "stamp" + (i < filledCount ? " on" : "");
 
     stamp.innerHTML = `
-      <img src="https://i.imgur.com/6IUbEMN.png">
+      <img src="logo.png" alt="Zach's Kagikit Logo" class="site-logo">
     `;
 
     grid.appendChild(stamp);
