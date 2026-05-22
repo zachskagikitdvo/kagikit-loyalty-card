@@ -1,0 +1,1 @@
+# kagikit-loyalty-card
