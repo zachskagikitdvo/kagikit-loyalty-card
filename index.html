@@ -657,7 +657,7 @@
   <div class="section-inner">
     <span class="section-tag">How it works</span>
     <h2 class="section-title">Simple rewards for <em>loyal customers.</em></h2>
-    <p class="section-lead">Start collecting rewards every time you order Zach’s Kagikit. Register your loyalty card online, then send your registered name and contact number to our Facebook or Instagram so we can encode and update your stamps manually.</p>
+    <p class="section-lead">Start collecting rewards every time you order Zach’s Kagikit. Register your loyalty card online and your name and contact number will automatically be saved in our loyalty tracker.</p>
 
     <div class="grid-3">
       <div class="info-card">
@@ -666,7 +666,7 @@
       </div>
       <div class="info-card">
         <div class="num">2</div>
-        <h3>Collect Stamps</h3><p>Every Kagikit jar purchase earns 1 digital stamp. After ordering, send your registered name and contact number to our Facebook or Instagram so we can update your card.</p>
+        <h3>Collect Stamps</h3><p>Every Kagikit jar purchase earns 1 digital stamp. After every confirmed order, your stamp count will be updated in your digital card.</p>
       </div>
       <div class="info-card">
         <div class="num">3</div>
@@ -676,8 +676,8 @@
 
     <div class="info-card" style="margin-top:18px;">
       <div class="num">💬</div>
-      <h3>Send Your Details</h3>
-      <p>Message your registered name and contact number so we can encode your stamps manually.<br><br><strong>Facebook:</strong> Zach’s Kagikit DVO<br><strong>Instagram:</strong> @zachs_kagikit</p>
+      <h3>Follow & Message Us</h3>
+      <p>For order updates, questions, and reward claims, message us on our official pages.<br><br><strong>Facebook:</strong> Zach’s Kagikit DVO<br><strong>Instagram:</strong> @zachs_kagikit</p>
     </div>
   </div>
 </section>
@@ -691,7 +691,7 @@
     <div class="app-grid">
       <div class="panel">
         <h3>Create Loyalty Card</h3>
-        <p class="panel-note">For new customers. This will save their name, contact number, and starting stamp count to Google Sheets.</p>
+        <p class="panel-note">For new customers. Once submitted, your name and contact number will automatically be saved in our loyalty tracker.</p>
         <form id="registerForm">
           <label for="name">Full Name</label>
           <input id="name" type="text" placeholder="Juan Dela Cruz" required />
@@ -781,7 +781,7 @@
 
 <script>
   // STEP 1: Paste your deployed Google Apps Script Web App URL here.
-  const API_URL = "https://script.google.com/macros/s/AKfycbx4Zwe0lmdp4iq7spYdltjcslBKckUQAKyumzZu59GOxCvgpAbBO4yEMy8RuvieYU_iOQ/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbwuoZk_WYYMBIt-cmDxVq5qD779MkD9ZLcAkoYK1DTYLbW_HPjkiBNSYMyvzjUf8T9q4g/exec";
 
   const chickenPath = `<path d="M32 8C24 8 18 13 18 20c0 4 2 7 2 7-4 1-8 4-8 9 0 6 5 10 12 11l-2 9h6l1-9h6l1 9h6l-2-9c7-1 12-5 12-11 0-5-4-8-8-9 0 0 2-3 2-7 0-7-6-12-14-12zm-4 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-8-4s-4-2-6 0c-1 1 0 3 2 3 1 0 3-1 4-3z"/>`;
 
@@ -810,16 +810,25 @@
 
   async function registerCustomer(name, contact) {
     if (!API_URL || API_URL.includes('PASTE_YOUR')) {
-      throw new Error('Setup needed: paste your Google Apps Script Web App URL in the API_URL line.');
+      throw new Error('Connection error: API URL is missing.');
     }
+
+    const formData = new URLSearchParams();
+    formData.append('action', 'register');
+    formData.append('name', name);
+    formData.append('contact', contact);
 
     const response = await fetch(API_URL, {
       method: 'POST',
-      body: JSON.stringify({ name, contact }),
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+      body: formData
     });
 
-    return await response.json();
+    const text = await response.text();
+    try {
+      return JSON.parse(text);
+    } catch (err) {
+      throw new Error('Registration was sent, but the server response was not readable. Please check Apps Script deployment.');
+    }
   }
 
   async function lookupCustomer(contact) {
@@ -844,7 +853,7 @@
 
     try {
       await registerCustomer(name, contact);
-      showStatus('registerStatus', 'Your loyalty card has been created. You may now check your stamps using your contact number.', 'success');
+      showStatus('registerStatus', 'Your loyalty card has been created and saved automatically. You may now check your stamps using your contact number.', 'success');
       document.getElementById('lookupContact').value = contact;
     } catch (error) {
       showStatus('registerStatus', error.message, 'error');
