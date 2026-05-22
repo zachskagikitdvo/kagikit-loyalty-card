@@ -1,157 +1,656 @@
-<!-- CUSTOMER CARD -->
-<div class="customer-card" id="customerCard">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <div class="customer-meta">
+<title>Zach's Kagikit Loyalty Card</title>
 
-    <div>
-      <div class="customer-name" id="customerName">
-        Customer Name
-      </div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-      <div class="customer-contact" id="customerContact">
-        09XX XXX XXXX
-      </div>
-    </div>
-
-    <div class="reward-status" id="rewardStatus">
-      10 to go
-    </div>
-
-  </div>
-
-  <div class="stamp-label">
-    YOUR CURRENT STAMPS
-  </div>
-
-  <div class="stamp-grid" id="customerStampGrid"></div>
-
-  <div class="card-footer">
-
-    <div>
-      <strong id="stampCountText">0</strong> / 10 stamps
-    </div>
-
-    <div id="remainingText">
-      10 more to go
-    </div>
-
-  </div>
-
-  <!-- EXPIRY INFO -->
-  <div class="expiry-info" id="expiryInfo">
-
-    <strong>Status:</strong> Not Started
-    <br>
-
-    <strong>Days Left:</strong> Not started yet
-
-  </div>
-
-  <p class="qr-note">
-    Show this card when claiming your reward.
-    The official stamp count is based on Zach's Kagikit customer tracker.
-  </p>
-
-</div>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-.expiry-info {
-  margin-top: 14px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: rgba(255,255,255,0.86);
-  font-size: 13px;
-  line-height: 1.55;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-.expiry-info strong {
-  color: white;
+body{
+  background:#24471f;
+  color:white;
+  font-family:'Inter',sans-serif;
+  padding:40px 20px;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+}
+
+.eyebrow{
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#b7c8a8;
+  margin-bottom:20px;
+}
+
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:72px;
+  line-height:0.95;
+  margin-bottom:18px;
+}
+
+.hero-title span{
+  color:#a9bf8f;
+  font-style:italic;
+}
+
+.hero-text{
+  color:#dbe4d1;
+  max-width:700px;
+  line-height:1.7;
+  margin-bottom:40px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+}
+
+.card{
+  border-radius:28px;
+  padding:28px;
+}
+
+.light-card{
+  background:#f3f0eb;
+  color:#1f2d1a;
+}
+
+.dark-card{
+  background:#365f2a;
+}
+
+.card h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:46px;
+  margin-bottom:8px;
+}
+
+.card p{
+  line-height:1.7;
+  margin-bottom:24px;
+}
+
+.label{
+  display:block;
+  font-size:12px;
+  letter-spacing:1.5px;
+  font-weight:700;
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.input{
+  width:100%;
+  border:none;
+  outline:none;
+  padding:18px 20px;
+  border-radius:16px;
+  margin-bottom:20px;
+  font-size:16px;
+}
+
+.button{
+  width:100%;
+  border:none;
+  border-radius:999px;
+  padding:18px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:0.2s ease;
+}
+
+.button-green{
+  background:#365f2a;
+  color:white;
+}
+
+.button-brown{
+  background:#7b5b16;
+  color:white;
+}
+
+.button:hover{
+  transform:translateY(-2px);
+}
+
+.status{
+  margin-top:18px;
+  padding:14px;
+  border-radius:14px;
+  font-size:14px;
+}
+
+.success{
+  background:#dfe8d8;
+  color:#24471f;
+}
+
+.error{
+  background:#f4d8d8;
+  color:#7a1f1f;
+}
+
+.customer-card{
+  margin-top:24px;
+}
+
+.customer-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:26px;
+}
+
+.customer-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;
+  font-weight:700;
+}
+
+.customer-contact{
+  margin-top:4px;
+  color:#c6d5b9;
+}
+
+.reward-status{
+  background:white;
+  color:#365f2a;
+  padding:10px 16px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:14px;
+}
+
+.stamp-label{
+  font-size:12px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-bottom:18px;
+  color:#b7c8a8;
+  font-weight:700;
+}
+
+.stamp-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+
+.stamp{
+  aspect-ratio:1/1;
+  border-radius:18px;
+  border:1px dashed rgba(255,255,255,0.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,0.03);
+}
+
+.stamp.on{
+  background:#dce6cf;
+}
+
+.stamp img{
+  width:30px;
+  opacity:0.25;
+}
+
+.stamp.on img{
+  opacity:1;
+}
+
+.card-footer{
+  display:flex;
+  justify-content:space-between;
+  margin-top:18px;
+  color:#dbe4d1;
+}
+
+.expiry-info{
+  margin-top:16px;
+  padding:14px;
+  border-radius:16px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+  line-height:1.7;
+  color:#e4eed8;
+}
+
+.expiry-info strong{
+  color:white;
+}
+
+.note{
+  margin-top:18px;
+  font-size:13px;
+  line-height:1.7;
+  color:#cbd6bf;
+}
+
+@media(max-width:900px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero-title{
+    font-size:52px;
+  }
+
 }
 
 </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="eyebrow">
+CUSTOMER PORTAL
+</div>
+
+<h1 class="hero-title">
+Get or check <span>your card.</span>
+</h1>
+
+<p class="hero-text">
+Create a new loyalty card or check your current stamps using your contact number.
+</p>
+
+<div class="grid">
+
+<div class="card light-card">
+
+<h2>Create Loyalty Card</h2>
+
+<p>
+For new customers. Once submitted, your name and contact number will automatically be saved in our loyalty tracker.
+</p>
+
+<form id="registerForm">
+
+<label class="label">Full Name</label>
+
+<input
+type="text"
+id="name"
+class="input"
+placeholder="Juan Dela Cruz"
+required
+/>
+
+<label class="label">Contact Number</label>
+
+<input
+type="text"
+id="contact"
+class="input"
+placeholder="09XX XXX XXXX"
+required
+/>
+
+<button class="button button-green">
+Create My Card
+</button>
+
+</form>
+
+<div id="registerStatus"></div>
+
+</div>
+
+<div class="card dark-card">
+
+<h2>Check My Stamps</h2>
+
+<p>
+Returning customers can enter their contact number to view their digital stamp card.
+</p>
+
+<form id="lookupForm">
+
+<label class="label">Contact Number</label>
+
+<input
+type="text"
+id="lookupContact"
+class="input"
+placeholder="09XX XXX XXXX"
+required
+/>
+
+<button class="button button-brown">
+Check My Card
+</button>
+
+</form>
+
+<div id="lookupStatus"></div>
+
+<div class="customer-card" id="customerCard">
+
+<div class="customer-meta">
+
+<div>
+
+<div class="customer-name" id="customerName">
+Customer Name
+</div>
+
+<div class="customer-contact" id="customerContact">
+09XX XXX XXXX
+</div>
+
+</div>
+
+<div class="reward-status" id="rewardStatus">
+10 to go
+</div>
+
+</div>
+
+<div class="stamp-label">
+YOUR CURRENT STAMPS
+</div>
+
+<div class="stamp-grid" id="customerStampGrid"></div>
+
+<div class="card-footer">
+
+<div>
+<strong id="stampCountText">0</strong> / 10 stamps
+</div>
+
+<div id="remainingText">
+10 more to go
+</div>
+
+</div>
+
+<div class="expiry-info" id="expiryInfo">
+
+<strong>Status:</strong> Not Started
+<br>
+
+<strong>Days Left:</strong> Not started yet
+
+</div>
+
+<p class="note">
+Show this card when claiming your reward.
+The official stamp count is based on Zach's Kagikit customer tracker.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 <script>
 
-const stamps = Number(customer.stamps) || 0;
+const API_URL = "https://script.google.com/macros/s/AKfycbzdMdEx6lkQ7qudolD1IetOsc5jFi84b5pLHYSd_oR2sHz7XqNAOd6Dq_aV2lRUwFJM/exec";
 
-const remaining = Math.max(0, 10 - stamps);
+function normalizeNumber(number){
+
+  let value = String(number || "")
+    .replace(/\s+/g,"")
+    .replace(/-/g,"")
+    .trim();
+
+  if(value.startsWith("+63")){
+    value = "0" + value.substring(3);
+  }
+
+  if(value.startsWith("63") && value.length === 12){
+    value = "0" + value.substring(2);
+  }
+
+  return value;
+}
+
+function buildStampGrid(containerId,filledCount){
+
+  const grid = document.getElementById(containerId);
+
+  grid.innerHTML = "";
+
+  for(let i=0;i<10;i++){
+
+    const stamp = document.createElement("div");
+
+    stamp.className = "stamp" + (i < filledCount ? " on" : "");
+
+    stamp.innerHTML = `
+      <img src="https://i.imgur.com/6IUbEMN.png">
+    `;
+
+    grid.appendChild(stamp);
+  }
+}
+
+function showStatus(id,message,type){
+
+  const box = document.getElementById(id);
+
+  box.innerHTML = `
+    <div class="status ${type}">
+      ${message}
+    </div>
+  `;
+}
+
+async function registerCustomer(name,contact){
+
+  const formData = new URLSearchParams();
+
+  formData.append("name",name);
+  formData.append("contact",contact);
+
+  const response = await fetch(API_URL,{
+    method:"POST",
+    body:formData
+  });
+
+  return await response.json();
+}
+
+async function lookupCustomer(contact){
+
+  const response = await fetch(
+    `${API_URL}?contact=${encodeURIComponent(contact)}`
+  );
+
+  return await response.json();
+}
+
+document
+.getElementById("registerForm")
+.addEventListener("submit",async function(e){
+
+e.preventDefault();
+
+const name =
+document.getElementById("name").value.trim();
+
+const contact =
+normalizeNumber(
+document.getElementById("contact").value
+);
+
+try{
+
+const result =
+await registerCustomer(name,contact);
+
+if(result.error){
+throw new Error(result.error);
+}
+
+showStatus(
+"registerStatus",
+"Your loyalty card has been created and saved automatically.",
+"success"
+);
+
+}catch(error){
+
+showStatus(
+"registerStatus",
+error.message || "Something went wrong.",
+"error"
+);
+
+}
+
+});
+
+document
+.getElementById("lookupForm")
+.addEventListener("submit",async function(e){
+
+e.preventDefault();
+
+const contact =
+normalizeNumber(
+document.getElementById("lookupContact").value
+);
+
+try{
+
+const customer =
+await lookupCustomer(contact);
+
+if(customer.error){
+throw new Error(customer.error);
+}
+
+const stamps =
+Number(customer.stamps) || 0;
+
+const remaining =
+Math.max(0,10 - stamps);
 
 const cardStatus =
-  customer.cardStatus || "Not Started";
+customer.cardStatus || "Not Started";
 
 const daysLeft =
-  customer.daysLeft === "" ||
-  customer.daysLeft === undefined
-    ? null
-    : Number(customer.daysLeft);
+customer.daysLeft === "" ||
+customer.daysLeft === undefined
+? null
+: Number(customer.daysLeft);
 
-let daysText = "Not started yet";
+let daysText =
+"Not started yet";
 
-if (cardStatus === "Expired") {
+if(cardStatus === "Expired"){
 
-  daysText = "Expired";
+daysText = "Expired";
 
-} else if (
-  daysLeft !== null &&
-  !isNaN(daysLeft)
-) {
+}else if(
+daysLeft !== null &&
+!isNaN(daysLeft)
+){
 
-  daysText =
-    `${Math.max(0, daysLeft)} day${
-      daysLeft == 1 ? "" : "s"
-    } left`;
+daysText =
+`${Math.max(0,daysLeft)} day${
+daysLeft == 1 ? "" : "s"
+} left`;
+
 }
 
 document.getElementById(
-  "customerName"
+"customerName"
 ).textContent =
-  customer.name || "Customer";
+customer.name || "Customer";
 
 document.getElementById(
-  "customerContact"
+"customerContact"
 ).textContent =
-  customer.contact || contact;
+customer.contact || contact;
 
 document.getElementById(
-  "rewardStatus"
+"rewardStatus"
 ).textContent =
-  cardStatus === "Expired"
-    ? "Expired"
-    : stamps >= 10
-    ? "Reward Available"
-    : `${remaining} to go`;
+cardStatus === "Expired"
+? "Expired"
+: stamps >= 10
+? "Reward Available"
+: `${remaining} to go`;
 
 document.getElementById(
-  "stampCountText"
+"stampCountText"
 ).textContent =
-  Math.min(stamps, 10);
+Math.min(stamps,10);
 
 document.getElementById(
-  "remainingText"
+"remainingText"
 ).textContent =
-  cardStatus === "Expired"
-    ? "Card expired"
-    : stamps >= 10
-    ? "🎉 Free jar unlocked"
-    : `${remaining} more to go`;
+cardStatus === "Expired"
+? "Card expired"
+: stamps >= 10
+? "🎉 Free jar unlocked"
+: `${remaining} more to go`;
 
 document.getElementById(
-  "expiryInfo"
+"expiryInfo"
 ).innerHTML = `
-  <strong>Status:</strong> ${cardStatus}<br>
-  <strong>Days Left:</strong> ${daysText}
+<strong>Status:</strong> ${cardStatus}<br>
+<strong>Days Left:</strong> ${daysText}
 `;
 
 buildStampGrid(
-  "customerStampGrid",
-  stamps
+"customerStampGrid",
+stamps
 );
 
-document
-  .getElementById("customerCard")
-  .classList.add("show");
+showStatus(
+"lookupStatus",
+"Card found.",
+"success"
+);
+
+}catch(error){
+
+showStatus(
+"lookupStatus",
+error.message || "Customer not found.",
+"error"
+);
+
+}
+
+});
+
+buildStampGrid(
+"customerStampGrid",
+0
+);
 
 </script>
+
+</body>
+</html>
